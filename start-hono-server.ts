@@ -11,7 +11,7 @@ const app = new Hono();
 app.get('/', (c) => c.text('Hello Node.js!'));
 app.post('/slack', async (c)=>{
     const body = await c.req.json();
-    console.log('debug: body', JSON.stringify(body));
+    //console.log('debug: body', JSON.stringify(body));
     const challenge = body['challenge'];
     await slackAppUrl(c.req.raw);
     return c.text(challenge, 200);
