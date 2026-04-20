@@ -10,9 +10,10 @@ const port = Number(process.env.PORT!||3000);
 const app = new Hono();
 app.get('/', (c) => c.text('Hello Node.js!'));
 app.post('/slack', async (c)=>{
-    const body = await c.req.json();
+    const cloneReq = c.req.raw.clone();
+    const body = await cloneReq.json();
     const challenge = body['challenge'];
-    await slackAppUrl(body);
+    await slackAppUrl(c.req.raw);
     return c.text(challenge, 200);
 });
 
