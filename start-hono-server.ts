@@ -13,6 +13,11 @@ app.get('/slack' ,async (c)=> {
     await slackAppUrl(c.req.raw);
     return c.text('ok',200);
 });
+app.post('/slack', async (c)=>{
+    const body = await c.req.json();
+    const challenge = body['challenge'];
+    return c.text(challenge, 200);
+});
 
 serve({
     fetch: app.fetch,
