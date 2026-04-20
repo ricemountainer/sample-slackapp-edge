@@ -9,13 +9,11 @@ const port = Number(process.env.PORT!||3000);
 
 const app = new Hono();
 app.get('/', (c) => c.text('Hello Node.js!'));
-app.get('/slack' ,async (c)=> {
-    await slackAppUrl(c.req.raw);
-    return c.text('ok',200);
-});
 app.post('/slack', async (c)=>{
     const body = await c.req.json();
+    console.log('debug: body', JSON.stringify(body));
     const challenge = body['challenge'];
+    await slackAppUrl(c.req.raw);
     return c.text(challenge, 200);
 });
 
