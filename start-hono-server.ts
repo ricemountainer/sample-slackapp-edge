@@ -1,0 +1,20 @@
+import { serve } from '@hono/node-server';
+import {Hono} from 'hono';
+
+import dotenv from 'dotenv';
+dotenv.config();
+import slackAppUrl from './slackapp-url.ts';
+
+const port = Number(process.env.PORT!||3000);
+
+const app = new Hono();
+app.get('/', (c) => c.text('Hello Node.js!'));
+app.get('/slack' ,async (c)=> {
+    await slackAppUrl(c.req.raw);
+    return c.text('ok',200);
+});
+
+serve({
+    fetch: app.fetch,
+    port: port,
+});
