@@ -3,8 +3,6 @@ import {Hono} from 'hono';
 
 import dotenv from 'dotenv';
 dotenv.config();
-//import slackAppUrl from './slack/slackapp-url.ts';
-
 import slackAppHttp from './slack/slackapp-http.ts';
 
 const port = Number(process.env.PORT!||3000);
