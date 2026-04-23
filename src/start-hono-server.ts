@@ -18,11 +18,16 @@ app.post('/slack', async (c)=>{
     await slackAppHttp(c.req.raw);
     return c.text(challenge, 200);
 });
+app.post('/slack/interactive' , async (c)=>{
+    const r = await slackAppHttp(c.req.raw);
+    return r;
+})
+/*
 app.post('/slack/commands/hey-button' ,async (c)=>{
     const r = await slackAppHttp(c.req.raw);
     return r;
 });
-
+*/
 serve({
     fetch: app.fetch,
     port: port,
