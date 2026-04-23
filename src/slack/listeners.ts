@@ -1,20 +1,10 @@
-import type { Http2ServerRequest } from 'http2';
-import {SlackApp, } from 'slack-edge';
+import type {SlackApp, SlackEdgeAppEnv, SlackSocketModeAppEnv, SlackAppOptions, Authorize} from 'slack-edge';
 
-export default async (request:Request) => {
-    const app = new SlackApp({
-        env: {
-            SLACK_SIGNING_SECRET: process.env.SLACK_SIGNING_SECRET!,
-            SLACK_BOT_TOKEN: process.env.SLACK_BOT_TOKEN,
-            //SLACK_APP_TOKEN: process.env.SLACK_APP_TOKEN,
-            SLACK_LOGGING_LEVEL: "DEBUG",
-        }
-    });
-
+const listeners = (app: SlackApp<any>) => {
   app.message('hello',
     async (_req) => {
       console.log(`debug: ${JSON.stringify(_req.context)}`);
-      const msg = `Hey there <@${_req.context.userId || ''}>! from slackapp-egde via request url`;
+      const msg = `Hey there <@${_req.context.userId || ''}>! from slackapp-egde`;
       await _req.context.say({text:msg});
     },
   );
@@ -28,7 +18,7 @@ export default async (request:Request) => {
           {
             type: 'section',
             block_id: 'button',
-            text: {type: 'mrkdwn' , text: 'click the button! on slackapp-edge with request url'},
+            text: {type: 'mrkdwn' , text: 'click the button!'},
             accessory: {
               type: 'button',
               action_id: 'button-action',
@@ -45,7 +35,7 @@ export default async (request:Request) => {
     async (req) => {},
     async (req) => {
       if(req.context.respond) {
-        await req.context.respond({text: 'ack you clicked the button! on slackapp-edge with request url'});
+        await req.context.respond({text: 'ack you clicked the button!'});
       } else {
         await req.context.client.views.open({
           trigger_id: req.payload.trigger_id,
@@ -57,7 +47,7 @@ export default async (request:Request) => {
             blocks: [
               {
                 type: 'section',
-                text: {type:'plain_text' , text: "you've clicked the button! on slackapp-edge with request url"}
+                text: {type:'plain_text' , text: "you've clicked the button!"}
               }
             ]
           }
@@ -65,7 +55,6 @@ export default async (request:Request) => {
       }
     }
   );
+};
 
-  return app.run(request);
-
-}
+export default {listeners};

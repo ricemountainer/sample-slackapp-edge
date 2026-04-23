@@ -3,7 +3,9 @@ import {Hono} from 'hono';
 
 import dotenv from 'dotenv';
 dotenv.config();
-import slackAppUrl from './slackapp-url.ts';
+//import slackAppUrl from './slack/slackapp-url.ts';
+
+import slackAppHttp from './slack/slackapp-http.ts';
 
 const port = Number(process.env.PORT!||3000);
 
@@ -13,9 +15,13 @@ app.post('/slack', async (c)=>{
     const cloneReq = c.req.raw.clone();
     const body = await cloneReq.json();
     const challenge = body['challenge'];
-    await slackAppUrl(c.req.raw);
+    await slackAppHttp(c.req.raw);
     return c.text(challenge, 200);
 });
+app.post('/slack/commands/hey-buton' ,async (c)=>{
+    await slackAppHttp(c.req.raw);
+    return c.text('ok' , 200);
+})
 
 serve({
     fetch: app.fetch,
