@@ -9,6 +9,15 @@ const listeners = (app: SlackApp<any>) => {
     },
   );
 
+  app.command('/hey' , 
+    async (req) => {
+        await req.context.respond({
+            response_type: 'ephemeral',
+            text: "what's up?"
+        })
+    }
+  );
+
   app.command('/hey-button', 
     async (req) =>{
       await req.context.respond({

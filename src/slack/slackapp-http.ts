@@ -11,9 +11,9 @@ export default async (request:Request) => {
         }
     });
   
+  // add listeners
   listeners.listeners(app);
 
   return app.run(request);
-  console.log('connected! - interactive mode');
 
 }

@@ -12,16 +12,16 @@ const port = Number(process.env.PORT!||3000);
 const app = new Hono();
 app.get('/', (c) => c.text('Hello Node.js!'));
 app.post('/slack', async (c)=>{
-    const cloneReq = c.req.raw.clone();
+    const cloneReq = c.req.raw.clone(); 
     const body = await cloneReq.json();
     const challenge = body['challenge'];
     await slackAppHttp(c.req.raw);
     return c.text(challenge, 200);
 });
 app.post('/slack/commands/hey-button' ,async (c)=>{
-    await slackAppHttp(c.req.raw);
-    return c.text('ok' , 200);
-})
+    const r = await slackAppHttp(c.req.raw);
+    return r;
+});
 
 serve({
     fetch: app.fetch,
