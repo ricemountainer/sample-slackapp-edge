@@ -18,7 +18,7 @@ app.post('/slack', async (c)=>{
     await slackAppHttp(c.req.raw);
     return c.text(challenge, 200);
 });
-app.post('/slack/commands/hey-buton' ,async (c)=>{
+app.post('/slack/commands/hey-button' ,async (c)=>{
     await slackAppHttp(c.req.raw);
     return c.text('ok' , 200);
 })
