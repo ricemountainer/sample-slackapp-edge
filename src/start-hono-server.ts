@@ -18,16 +18,16 @@ app.post('/slack', async (c)=>{
     await slackAppHttp(c.req.raw);
     return c.text(challenge, 200);
 });
-app.post('/slack/interactive' , async (c)=>{
-    const r = await slackAppHttp(c.req.raw);
-    return r;
-})
-/*
-app.post('/slack/commands/hey-button' ,async (c)=>{
+app.post('/slack/commands', async (c)=>{
+    console.log('debug: /slack/commands was requested');
     const r = await slackAppHttp(c.req.raw);
     return r;
 });
-*/
+app.post('/slack/interactive' , async (c)=>{
+    console.log('debug: /slack/interactive was requested');
+    const r = await slackAppHttp(c.req.raw);
+    return r;
+});
 serve({
     fetch: app.fetch,
     port: port,
