@@ -27,7 +27,7 @@ node src/start-hono-server.ts
 # Run on Cloudflare Workers
 
 1. Fork the repo
-2. Mainte `name` and `compatibility_date` fields on [wrangler.json](./wrangler.json) 
+2. Mainte `name` and `compatibility_date` fields on [wrangler.jsonc](./wrangler.jsonc) 
 3. Create Cloudflare Worker app
 4. Connect your repo
 
