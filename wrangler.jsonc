@@ -1,0 +1,15 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  // Top-level configuration
+  "name": "slackapp-test",
+  "main": "src/hono.ts",
+  // Set this to today's date
+  "compatibility_date": "2026-04-24",
+  "compatibility_flags": [
+      "nodejs_compat_v2",
+      "nodejs_compat_populate_process_env"
+  ],
+  "observability": {
+      "enabled": true
+  }
+}

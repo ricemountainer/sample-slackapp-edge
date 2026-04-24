@@ -1,6 +1,6 @@
 A sample (and very simple) Slack App, built by [slack-edge](https://github.com/slack-edge/slack-edge) and Typescript. 
 
-# Before running:
+# Before running
 Configure following env values:
 - `SLACK_SIGNING_SECRET`
 - `SLACK_BOT_TOKEN`
@@ -8,27 +8,36 @@ Configure following env values:
   
 You can obtain these values on your own Slack App config pages. Please refer [the guide](https://docs.slack.dev/tools/bolt-js/ja-jp/getting-started/) to create a Slack App
 
-# Socket Mode
+# Run app
+
+## Socket Mode
 
 Run the command:
 ```
 node src/run-socket-mode.ts
 ```
 
-# HTTP Mode
+## HTTP Mode
 
 On a usual runtime, run the command - it starts a [Hono](https://hono.dev/) Node server:
 ```
 node src/start-hono-server.ts
 ```
 
-# Run on Heroku:
+# Run on Cloudflare Workers
 
-1. Create a Heroku app
-2. Clone the repo
-3. Deploy to Heroku
+1. Fork the repo
+2. Mainte `name` and `compatibility_date` fields on [wrangler.json](./wrangler.json) 
+3. Create Cloudflare Worker app
+4. Connect your repo
 
-## Socket Mode
+# Deploy to Heroku
+
+1. Fork the repo
+2. Create a Heroku app
+3. Connect your repo and deploy
+
+## Run Socket Mode on Heroku
 Please run following commands:
 - `heroku ps:scale web=0 -a [your heroku app name]`
 - `heroku ps:scale socket=1 -a [your heroku app name]`
