@@ -8,10 +8,10 @@ app.post('/slack', async (c)=>{
     const cloneReq = c.req.raw.clone(); 
     const body = await cloneReq.json();
     const challenge = body['challenge'];
-    //if (challenge)  return c.text(challenge, 200);
-    //if(c.executionCtx.waitUntil) c.executionCtx.waitUntil(slackAppHttp(c.req.raw));
+    if (challenge)  return c.text(challenge, 200);
+    if(c.executionCtx.waitUntil) c.executionCtx.waitUntil(slackAppHttp(c.req.raw));
     //return c.text('ok',200);
-    return await c.text(challenge, 200);
+    return new Response("");
 });
 app.post('/slack/commands', async (c)=>{
     // for Slash Command
