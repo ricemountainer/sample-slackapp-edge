@@ -9,7 +9,7 @@ app.post('/slack', async (c)=>{
     const body = await cloneReq.json();
     const challenge = body['challenge'];
     if (challenge)  return c.text(challenge, 200);
-    if(c.executionCtx.waitUntil) c.executionCtx.waitUntil(slackAppHttp(c.req.raw));
+    if(c.executionCtx.waitUntil) c.executionCtx.waitUntil(slackAppHttp(c.req.raw, c.executionCtx));
     //return c.text('ok',200);
     return new Response("");
 });

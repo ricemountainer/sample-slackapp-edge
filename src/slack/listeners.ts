@@ -1,4 +1,4 @@
-import type {SlackApp, MessageEventLazyHandler} from 'slack-edge';
+import type {SlackApp, } from 'slack-edge';
 
 const listeners = (app: SlackApp<any>) => {
   app.message('hello',
