@@ -3,14 +3,12 @@ import type {SlackApp, MessageEventLazyHandler} from 'slack-edge';
 const listeners = (app: SlackApp<any>) => {
   app.message('hello',
     async (req) => {
-      console.log('debug: ' + JSON.stringify({retryNum: req.retryNum, retryReason: req.retryReason}));
+      console.log('debug1: ' + JSON.stringify({retryNum: req.retryNum, retryReason: req.retryReason}));
       const msg = `Hey there <@${req.context.userId || ''}>! from slackapp-egde`;
       const r = await req.context.say({text:msg});
-      console.log('debug: ' + JSON.stringify(r));
+      console.log('debug2: ' + JSON.stringify(r));
     },
   );
-
-
 
   app.command('/hey' , 
     async (req) => {
