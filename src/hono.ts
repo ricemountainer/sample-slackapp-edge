@@ -1,31 +1,31 @@
-import {Hono} from 'hono';
+import {Hono, type Context} from 'hono';
+import { getRuntimeKey } from 'hono/adapter';
 
 import slackAppHttp from './slack/slackapp-http.ts';
 
 const app = new Hono();
 app.get('/', (c) => c.text('Hello Node.js!'));
+const runSlackApp = async (c:Context) => {
+    const runtimeKey = getRuntimeKey();
+    console.log('debug: runtimeKey=' + runtimeKey);
+    if (runtimeKey == 'workerd') {
+        return slackAppHttp(c.req.raw, c.executionCtx)
+    } else {
+        return slackAppHttp(c.req.raw);
+    }
+}
 app.post('/slack', async (c)=>{
     const cloneReq = c.req.raw.clone(); 
     const body = await cloneReq.json();
     const challenge = body['challenge'];
     if (challenge)  return c.text(challenge, 200); // for initial setup
-    //if(c.executionCtx.waitUntil) c.executionCtx.waitUntil(slackAppHttp(c.req.raw, c.executionCtx));
-    try {
-        return await slackAppHttp(c.req.raw, c.executionCtx);
-    } catch(error) {
-        console.log('no executionContext');
-        return await slackAppHttp(c.req.raw);
-    }
+    return await runSlackApp(c);
 });
-app.post('/slack/commands', async (c)=>{
+app.post('/slack/others', async (c)=>{
     // for Slash Command
-    const r = await slackAppHttp(c.req.raw);
-    return r;
-});
-app.post('/slack/interactive' , async (c)=>{
-    // for Interactive Component & Shortcuts
-    const r = await slackAppHttp(c.req.raw);
-    return r;
+    return await runSlackApp(c);
+    //const r = await slackAppHttp(c.req.raw);
+    //return r;
 });
 export default app;
 
