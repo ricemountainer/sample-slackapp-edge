@@ -10,9 +10,10 @@ app.post('/slack', async (c)=>{
     const challenge = body['challenge'];
     if (challenge)  return c.text(challenge, 200); // for initial setup
     //if(c.executionCtx.waitUntil) c.executionCtx.waitUntil(slackAppHttp(c.req.raw, c.executionCtx));
-    if (c.executionCtx) {
-        return await slackAppHttp(c.req.raw, c.executionCtx)
-    } else {
+    try {
+        return await slackAppHttp(c.req.raw, c.executionCtx);
+    } catch(error) {
+        console.log('no executionContext');
         return await slackAppHttp(c.req.raw);
     }
 });
