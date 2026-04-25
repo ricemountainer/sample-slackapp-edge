@@ -7,7 +7,6 @@ const app = new Hono();
 app.get('/', (c) => c.text('Hello Node.js!'));
 const runSlackApp = async (c:Context) => {
     const runtimeKey = getRuntimeKey();
-    console.log('debug: runtimeKey=' + runtimeKey);
     if (runtimeKey == 'workerd') {
         return slackAppHttp(c.req.raw, c.executionCtx)
     } else {
@@ -22,10 +21,8 @@ app.post('/slack', async (c)=>{
     return await runSlackApp(c);
 });
 app.post('/slack/others', async (c)=>{
-    // for Slash Command
+    // for Slash Command, Interactive Components, Shortcuts...
     return await runSlackApp(c);
-    //const r = await slackAppHttp(c.req.raw);
-    //return r;
 });
 export default app;
 
