@@ -9,7 +9,8 @@ app.post('/slack', async (c)=>{
     const body = await cloneReq.json();
     const challenge = body['challenge'];
     if (challenge)  return c.text(challenge, 200); // for initial setup
-    return await slackAppHttp(c.req.raw, c.executionCtx);
+    if(c.executionCtx.waitUntil) c.executionCtx.waitUntil(slackAppHttp(c.req.raw));
+    return new Response("");
 });
 app.post('/slack/commands', async (c)=>{
     // for Slash Command

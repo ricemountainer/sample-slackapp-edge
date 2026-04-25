@@ -1,7 +1,7 @@
 import {SlackApp,type ExecutionContext } from 'slack-edge';
 import listeners from './listeners.ts';
 
-export default async (request:Request, context?:ExecutionContext) => {
+export default async (request:Request) => {
     const app = new SlackApp({
         env: {
             SLACK_SIGNING_SECRET: process.env.SLACK_SIGNING_SECRET!,
@@ -14,6 +14,6 @@ export default async (request:Request, context?:ExecutionContext) => {
   // add listeners
   listeners.listeners(app);
 
-  return app.run(request,context);
+  return app.run(request);
 
 }
