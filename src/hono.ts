@@ -12,9 +12,11 @@ app.post('/slack', async (c)=>{
         // for initial setup
         return c.text(challenge, 200);
     }
-    c.executionCtx.waitUntil(
-        slackAppHttp(c.req.raw)
-    );
+    if(c.executionCtx) {
+        c.executionCtx.waitUntil(
+            slackAppHttp(c.req.raw)
+        );
+    }
     //const r = await slackAppHttp(c.req.raw);
     return new Response("");
 });
