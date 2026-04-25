@@ -1,19 +1,23 @@
-import type {SlackApp, SlackEdgeAppEnv, SlackSocketModeAppEnv, SlackAppOptions, Authorize} from 'slack-edge';
+import { runInNewContext } from 'node:vm';
+import type {SlackApp, MessageEventLazyHandler} from 'slack-edge';
 
 const listeners = (app: SlackApp<any>) => {
   app.message('hello',
     async (req) => {
+      console.log('debug: ' + JSON.stringify({retryNum: req.retryNum, retryReason: req.retryReason}));
       const msg = `Hey there <@${req.context.userId || ''}>! from slackapp-egde`;
-      await req.context.say({text:msg});
+      const r = await req.context.say({text:msg});
     },
   );
+
+
 
   app.command('/hey' , 
     async (req) => {
         await req.context.respond({
             response_type: 'ephemeral',
             text: "what's up?"
-        })
+        });
     }
   );
 

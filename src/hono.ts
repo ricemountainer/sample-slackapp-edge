@@ -12,8 +12,11 @@ app.post('/slack', async (c)=>{
         // for initial setup
         return c.text(challenge, 200);
     }
-    const r = await slackAppHttp(c.req.raw);
-    return r;
+    c.executionCtx.waitUntil(
+        slackAppHttp(c.req.raw)
+    );
+    //const r = await slackAppHttp(c.req.raw);
+    return new Response("");
 });
 app.post('/slack/commands', async (c)=>{
     // for Slash Command
