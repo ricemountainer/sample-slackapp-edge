@@ -54,5 +54,6 @@ Socket Mode and HTTP Mode are available.
 ## Run Socket Mode on Heroku
 
 Please run following commands:
-- `heroku ps:scale web=0 -a [your heroku app name]`
-- `heroku ps:scale socket=1 -a [your heroku app name]`
+```
+heroku ps:scale socket=1 -a [your heroku app name]
+```
