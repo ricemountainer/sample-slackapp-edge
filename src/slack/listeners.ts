@@ -2,10 +2,9 @@ import type {SlackApp, SlackEdgeAppEnv, SlackSocketModeAppEnv, SlackAppOptions, 
 
 const listeners = (app: SlackApp<any>) => {
   app.message('hello',
-    async (_req) => {
-      console.log(`debug: ${JSON.stringify(_req.context)}`);
-      const msg = `Hey there <@${_req.context.userId || ''}>! from slackapp-egde`;
-      await _req.context.say({text:msg});
+    async (req) => {
+      const msg = `Hey there <@${req.context.userId || ''}>! from slackapp-egde`;
+      await req.context.say({text:msg});
     },
   );
 
