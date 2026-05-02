@@ -12,7 +12,7 @@ const listeners = (app: SlackApp<any>) => {
     async (req) => {
         await req.context.respond({
             response_type: 'ephemeral',
-            text: "what's up?"
+            text: "your message is:" + req.payload.text
         });
     }
   );
